@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>google_keep_logo.png</file>
+        <file>google-keep-splash.png</file>
+    </qresource>
+</RCC>
