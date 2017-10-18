@@ -9,7 +9,7 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WebFrameLoadDelegate {
+class ViewController: NSViewController, WebFrameLoadDelegate, WebPolicyDelegate {
 
     @IBOutlet weak var webView: WebView!
     @IBOutlet weak var splashImage: NSImageView!
@@ -24,8 +24,8 @@ class ViewController: NSViewController, WebFrameLoadDelegate {
         waitIndicator.startAnimation(nil)
         webView.isHidden = true
         webView.mainFrame?.load(URLRequest(url: url))
-        
-        self.webView.frameLoadDelegate = self
+        webView.frameLoadDelegate = self
+        webView.policyDelegate = self
     }
 
     override var representedObject: Any? {
@@ -39,6 +39,49 @@ class ViewController: NSViewController, WebFrameLoadDelegate {
         splashImage.isHidden = true
         webView.isHidden = false
     }
-
+    
+    func webView(_ webView: WebView!, decidePolicyForNewWindowAction actionInformation: [AnyHashable : Any]!, request: URLRequest!, newFrameName frameName: String!, decisionListener listener: WebPolicyDecisionListener!) {
+        guard let currentUrl = request.url else {
+            return
+        }
+        listener.ignore()
+        NSWorkspace.shared().open(currentUrl)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
