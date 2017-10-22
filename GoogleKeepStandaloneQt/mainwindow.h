@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QWebEngineView>
+#include <QSystemTrayIcon>
 
 #include "webpage.h"
 
@@ -24,11 +25,13 @@ public:
 private:
     Ui::MainWindow *ui;
     QWebEngineView *view;
+    QSystemTrayIcon *trayIcon;
     WebPage *page;
 
 private slots:
     void loadKeepsFinished(bool success);
     void loadKeepsProgress(int progress);
+    void showHide(QSystemTrayIcon::ActivationReason reason);
 
 };
 

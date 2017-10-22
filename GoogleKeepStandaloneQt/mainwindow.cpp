@@ -12,8 +12,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("Google Keep Standalone");
     this->installEventFilter(this);
 
-    // fixme: from form
+    // FIXME: from form
     ui->progressBar->move((this->width()/2) - (ui->progressBar->width()/2), this->height()/2);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/google_keep_logo.png"));
+    trayIcon->setToolTip("Google Keep Standalone");
+    trayIcon->show();
 
     view = new QWebEngineView(this);
     page = new WebPage(this);
@@ -22,8 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     view->load(QUrl("https://keep.google.com"));
     view->hide();
 
+    // QWebEngineView
     connect(view, &QWebEngineView::loadFinished, this, &MainWindow::loadKeepsFinished);
     connect(view, &QWebEngineView::loadProgress, this, &MainWindow::loadKeepsProgress);
+
+    // QSystemTrayIcon
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::showHide);
 }
 
 MainWindow::~MainWindow()
@@ -55,4 +64,16 @@ void MainWindow::loadKeepsFinished(bool success)
 void MainWindow::loadKeepsProgress(int progress)
 {
     ui->progressBar->setValue(progress);
+}
+
+void MainWindow::showHide(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason != QSystemTrayIcon::Trigger) {
+        return;
+    }
+    if (this->isVisible()) {
+        this->hide();
+    } else {
+        this->show();
+    }
 }

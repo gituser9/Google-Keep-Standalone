@@ -1,13 +1,6 @@
-//
-//  ViewController.swift
-//  Google Keep Standalone
-//
-//  Created by user on 09.10.17.
-//  Copyright © 2017 user. All rights reserved.
-//
-
 import Cocoa
 import WebKit
+
 
 class ViewController: NSViewController, WebFrameLoadDelegate, WebPolicyDelegate {
 

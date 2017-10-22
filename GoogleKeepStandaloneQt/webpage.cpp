@@ -12,7 +12,7 @@ bool WebPage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::Navigatio
 
     if (type == QWebEnginePage::NavigationTypeLinkClicked && isLoaded) {
         //QDesktopServices::openUrl(url);
-        return false;
+        return true;
     }
     return true;
 }
